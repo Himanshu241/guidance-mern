@@ -1,5 +1,57 @@
+/* src/index.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
 .app{
     height: 100%;
     width: 100%;
     font-family: "rubik", sans-serif;
+    background-color: #0f1729;
 }
+
+/* intro page css */
+.intro-btn-container{
+    padding: 0 30% ;
+}
+.title{
+    font-size: xx-large;
+    color: white;
+}
+.title-container{
+    display: flex;
+  justify-content: center; /* Horizontal alignment */
+  align-items: center; /* Vertical alignment */
+  height: 50vh; 
+}
+
+.typing-animation {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 5px solid #333;
+    animation: typing 3s steps(28) infinite, blink-caret 0.7s infinite;
+    display: inline-block;
+  }
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 15%;
+    }
+  }
+  
+  @keyframes blink-caret {
+    from, to {
+      border-color: transparent;
+    }
+    50% {
+      border-color: #333;
+    }}
+
+    /* English */
+.typing-animation[data-text-en]:before {
+    content: attr(data-text-en);
+  }
+ 

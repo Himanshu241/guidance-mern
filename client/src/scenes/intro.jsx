@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomButton from '../components/button'
+
 
 
 const intro = () => {
@@ -14,10 +14,13 @@ const intro = () => {
   return (
     <div>
         
-        <h1 className='title' >MargDarshan</h1>
-        <CustomButton color="#845ef7" onClick={handleSignUp} text="sign-up"></CustomButton>
-        <CustomButton color="#845ef7" onClick={handleSignIn} text="sign-in"></CustomButton>
-
+        <div className='title-container '>
+        <h1 class="typing-animation title" data-text-en="MargDarshan" t></h1>
+        </div>
+        <div className='intro-btn-container'>
+          <button className="btn btn-primary btn-block" onClick={handleSignIn}>sign-in</button>
+          <button className="btn btn-primary btn-block" onClick={handleSignUp}>sign-up</button>
+        </div>
     </div>
   )
 }
