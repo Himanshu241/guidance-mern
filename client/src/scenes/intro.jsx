@@ -1,21 +1,22 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
 
-
-const intro = () => {
+const Intro = () => {
+  const navigate = useNavigate();
 
   const handleSignIn=()=>{
-      alert('sign in')
+      navigate('/signIn');
   }
   const handleSignUp = ()=>{
-    alert('sign up')
+    navigate('/signUp');
   }
 
   return (
     <div>
         
         <div className='title-container '>
-        <h1 class="typing-animation title" data-text-en="MargDarshan" t></h1>
+        <h1 class=" title"  >MargDarshan</h1>
         </div>
         <div className='intro-btn-container'>
           <button className="btn btn-primary btn-block" onClick={handleSignIn}>sign-in</button>
@@ -25,4 +26,4 @@ const intro = () => {
   )
 }
 
-export default intro
+export default Intro
