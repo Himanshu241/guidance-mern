@@ -1,0 +1,57 @@
+/* src/index.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+*{
+    background-color: #0f1729;
+    box-sizing: border-box;
+}
+
+.app{
+    height: 100%;
+    width: 100%;
+    font-family: "rubik", sans-serif;
+    background-color: #0f1729;
+}
+
+/* intro page css */
+.intro-btn-container{
+    padding: 0 30% ;
+}
+.title{
+    font-size: xx-large;
+    color: white;
+}
+.title-container{
+    display: flex;
+  justify-content: center; /* Horizontal alignment */
+  align-items: center; /* Vertical alignment */
+  height: 50vh; 
+}
+/*FOOTER CSS*/
+.footer
+{
+    background-color: #0f1729;
+    margin-top: 150px;
+    padding: 100px 15%;
+    display: flex;
+    color: #efefef;
+    gap: 200px;
+}
+.footer div {
+    text-align: center;
+}
+.col-1 a{
+display: block;
+text-decoration: none;
+margin-bottom: 10px;
+}
+.footer div h3{
+    font-weight: 1000;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    color: #efefef;
+}
+   
+ 
+
