@@ -5,6 +5,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import User from './models/user.js';
+import jwt from 'jsonwebtoken'
 // const mongoose = require('mongoose');
 // const bodyParser = require('body-parser');
 // const cors = require('cors');
@@ -42,6 +43,31 @@ app.post("/register",async (req, res)=>{
         res.status(500).json({error : error.message})
     }
 });
+app.post('/login', async (req, res) => {
+    
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    console.log(user)
+    if (!user) {
+      return res.status(401).json({ message: 'User not found' });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ message: 'Invalid password' });
+    }
+
+    // Generate and send a JWT token
+    const token = await jwt.sign({ email: user.email },process.env.JWT_SECRET);
+    console.log(token)
+    delete user.password;
+    res.status(200).json({ token,user});
+  });
+
+  
+
+ 
 
 
 /* MONGOOSE SETUP */

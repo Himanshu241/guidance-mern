@@ -2,32 +2,107 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-
+*{
+    box-sizing: border-box;
+}
 
 .app{
-    height: 300%;
-    width: 300%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: scroll;
     font-family: "rubik", sans-serif;
     background-color: #0f1729;
 }
-
-/* intro page css */
-.intro-btn-container{
+video
+{  position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: fill;
+    background-color: rgba(0,0,0,0.9);
+}
+.title-container
+{
+    position: absolute;
+    top:100px;
+    left:550px;
+}
+.intro-btn-container
+{
+    position: absolute;
+    top:150px;
+    left:10px;
     padding: 0 30% ;
+    width: 100%;
+
 }
 .title{
     font-size: xx-large;
     color: white;
 }
-.title-container{
+/*FOOTER CSS*/
+.footer
+{
+    margin-top: 1px;
+    margin-bottom: 0px;
+    padding: 100px 15%;
     display: flex;
-  justify-content: center; /* Horizontal alignment */
-  align-items: center; /* Vertical alignment */
-  height: 50vh; 
+    color: #efefef;
+    gap: 200px;
+    position: relative;
+    top: 200px;
+    left: 10px;
+    bottom: 10px;
 }
+.footer div {
+    text-align: center;
+}
+.col-1 a{
+display: block;
+text-decoration: none;
+margin-bottom: 10px;
+}
+.footer div h3{
+    font-weight: 1000;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    color: #efefef;
+}
+form input
+{
+    width: 300px;
+    height: 45 px;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: black;
 
-
- 
-   
- 
-
+}  
+form button
+{
+    background: transparent;
+    border: 2px solid #efefef;
+    color :#fff;
+    border-radius: 30px;
+    padding: 10px 30px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-left: 80px;
+} 
+.social-icon
+{
+    margin-top: 30px;
+} 
+.social-icon i
+{
+    font-size: 22px;
+    margin: 10px;
+    cursor: pointer;
+}
+/*footer end*/
