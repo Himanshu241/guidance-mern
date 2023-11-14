@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import video from '/Users/DELL/guidance-mern/client/src/Logo/video1.mp4';
+import video from '../Logo/video1.mp4';
 
 
 const Intro = () => {
@@ -17,12 +17,12 @@ const Intro = () => {
     <div className='container'>
     <video src ={video} autoPlay muted loop/>
       <div className='border'>
-      <div className='title-container'>
+      <div className='title-container mx-auto'>
         <h1 className='title'>MargDarshan</h1>
       </div>
     <div className='intro-btn-container'>
     <button type='button' className="btn btn-primary btn-block"  onClick={handleSignIn}>sign-in</button>
-    <br/>
+    {/* <br/> */}
     <button type='button' className="btn btn-primary btn-block"  onClick={handleSignUp}>sign-up</button>
     </div>
     </div>

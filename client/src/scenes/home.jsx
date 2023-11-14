@@ -1,11 +1,16 @@
 import React from 'react'
 import Foot from './Foot';
+import Feeds from './feeds';
+import AddQuestion from './addquestion';
+
 function Home() {
   return (
     <>
-    <div>
-      <h1 className='text-white'>home</h1>
-      </div>
+    
+    <AddQuestion/>
+      
+    <Feeds/>
+    
     <Foot/>
     </>
   )

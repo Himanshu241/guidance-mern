@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { setLogin } from '../state';
 const SignInForm = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [formData, setFormData] = useState({
       email: '',
@@ -31,7 +34,15 @@ const SignInForm = () => {
             console.error(res);
           }
           else if(response.status === 200){
+
+            dispatch(
+              setLogin({
+                user : res.user,
+                token : res.token
+              })
+            )
             navigate('/home');
+            
             console.log(res.token);
           }
           

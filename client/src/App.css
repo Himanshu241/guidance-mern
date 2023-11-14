@@ -30,7 +30,8 @@ video
 {
     position: absolute;
     top:100px;
-    left:550px;
+    left: 40%;
+   
 }
 .intro-btn-container
 {
@@ -39,6 +40,7 @@ video
     left:10px;
     padding: 0 30% ;
     width: 100%;
+    
 
 }
 .title{

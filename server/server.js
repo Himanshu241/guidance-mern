@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import User from './models/user.js';
 import jwt from 'jsonwebtoken'
+import Question from './models/question.js';
 // const mongoose = require('mongoose');
 // const bodyParser = require('body-parser');
 // const cors = require('cors');
@@ -65,6 +66,24 @@ app.post('/login', async (req, res) => {
     res.status(200).json({ token,user});
   });
 
+  app.post('/question', async(req, res)=>{
+    try{
+       
+        
+        const {title, body, tags, createdBy} = req.body;
+        const tagsList = tags.split(',');
+        console.log(tagsList)
+        const newQuestion =await new Question({title, body, tags:tagsList, createdBy});
+        const response = await newQuestion.save()
+        .then(question => {
+        console.log('Question saved:', question);
+    })
+    }
+    catch(error){
+      console.error('Error saving question:', error);
+    }
+}
+    );
   
 
  
