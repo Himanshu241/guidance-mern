@@ -108,3 +108,13 @@ form button
     cursor: pointer;
 }
 /*footer end*/
+
+.sliding-form {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+  }
+  
+  .sliding-form.open {
+    max-height: 300px; /* Adjust the height as needed */
+  }

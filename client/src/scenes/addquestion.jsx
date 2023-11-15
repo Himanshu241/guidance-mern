@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux/es/hooks/useSelector';
 
 const AddQuestion = () => {
 
-const userId = useSelector((state)=>state.user._id);  
+const userId = useSelector((state)=>state.auth._id);  
+const token = useSelector((state)=>state.auth.token);
   const [questionData, setQuestionData] = useState({
     title: '',
     body: '',
@@ -21,7 +22,7 @@ const userId = useSelector((state)=>state.user._id);
     try {
       setQuestionData({...questionData,createdBy:userId});  
       console.log(questionData)
-      const response = await axios.post('http://localhost:3001/question/', questionData);
+      const response = await axios.post('http://localhost:3001/question/', questionData );
       
       // Handle the response as needed (e.g., show a success message, reset form)
       console.log('Question added successfully:', response.data);

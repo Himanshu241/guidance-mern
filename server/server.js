@@ -7,12 +7,8 @@ import bcrypt from 'bcrypt';
 import User from './models/user.js';
 import jwt from 'jsonwebtoken'
 import Question from './models/question.js';
-// const mongoose = require('mongoose');
-// const bodyParser = require('body-parser');
-// const cors = require('cors');
-// const dotenv = require('dotenv');
-// const bcrypt = require('bcrypt');
-// const User = require('./models/user');
+import { verifyToken } from './middleware/auth.js';
+
 
 //configurations
 dotenv.config();
@@ -60,7 +56,7 @@ app.post('/login', async (req, res) => {
     }
 
     // Generate and send a JWT token
-    const token = await jwt.sign({ email: user.email },process.env.JWT_SECRET);
+    const token = await jwt.sign({ userId: user.userId },process.env.JWT_SECRET,{ expiresIn: '1h' });
     console.log(token)
     delete user.password;
     res.status(200).json({ token,user});
@@ -68,8 +64,6 @@ app.post('/login', async (req, res) => {
 
   app.post('/question', async(req, res)=>{
     try{
-       
-        
         const {title, body, tags, createdBy} = req.body;
         const tagsList = tags.split(',');
         console.log(tagsList)
@@ -84,7 +78,15 @@ app.post('/login', async (req, res) => {
     }
 }
     );
-  
+  app.get('/getQuestions',async(req, res)=>{
+    try {
+        const questions = await Question.find();
+        console.log(questions)
+        res.json(questions);
+    } catch (error) {
+        console.log(error.message);
+    }
+  })
 
  
 
