@@ -14,7 +14,7 @@ const Feeds = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        console.log(data)
+       
         setQuestions(data);
       } catch (error) {
         console.error('Error fetching items:', error);
@@ -27,6 +27,8 @@ const Feeds = () => {
   },[])
  return(
   <div>{questions.map(question=>{return <FeedPost key={question._id} 
+    questionId={question._id}
+    name = {question.name}
     title={question.title} 
     body={question.body}
     tags={question.tags}

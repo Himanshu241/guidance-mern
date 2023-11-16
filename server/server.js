@@ -64,10 +64,10 @@ app.post('/login', async (req, res) => {
 
   app.post('/question', async(req, res)=>{
     try{
-        const {title, body, tags, createdBy} = req.body;
+        const {name, title, body, tags, createdBy} = req.body;
         const tagsList = tags.split(',');
         console.log(tagsList)
-        const newQuestion =await new Question({title, body, tags:tagsList, createdBy});
+        const newQuestion =await new Question({name, title, body, tags:tagsList, createdBy});
         const response = await newQuestion.save()
         .then(question => {
         console.log('Question saved:', question);
@@ -81,14 +81,42 @@ app.post('/login', async (req, res) => {
   app.get('/getQuestions',async(req, res)=>{
     try {
         const questions = await Question.find();
-        console.log(questions)
+        
         res.json(questions);
     } catch (error) {
         console.log(error.message);
     }
   })
 
- 
+ app.post('/question/:id/answer', async(req,res)=>{
+  try {
+    const { id } = req.params;
+    const { body, name, createdBy } = req.body;
+
+    const question = await Question.findById(id);
+
+    if (!question) {
+      return res.status(404).json({ message: 'Question not found' });
+    }
+
+    const newAnswer = {
+      body,
+      name,
+      createdBy,
+    };
+    console.log(newAnswer)
+    console.log(id)
+
+    question.answers.push(newAnswer);
+    await question.save();
+
+    res.status(201).json({ message: 'Answer added successfully', newAnswer });
+  } catch (error) {
+    console.error('Error adding answer:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+    
+});
 
 
 /* MONGOOSE SETUP */

@@ -1,7 +1,12 @@
 import mongoose from "mongoose";
 
-// Define the schema
+
 const questionSchema = new mongoose.Schema({
+  name:{
+    type: String,
+    required:true,
+    trim: true
+  },
   title: {
     type: String,
     required: true,
@@ -24,6 +29,7 @@ const questionSchema = new mongoose.Schema({
   answers: [
     {
       body: String,
+      name: String,
       createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
