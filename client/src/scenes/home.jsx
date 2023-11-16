@@ -2,12 +2,14 @@ import React from 'react'
 import Foot from './Foot';
 import { useState } from 'react';
 import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector';
+import Navbar from './Navbar.jsx';
 function Home() {
   const token = useSelector((state)=>state.token); 
   const userName = useSelector((state)=>state.user.name);
    
   return (
     <>
+    <Navbar/>
     <div className='text-white'>{token}</div>
     <div className='text-white'>{userName}</div>
     <Foot/>

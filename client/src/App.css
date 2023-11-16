@@ -52,6 +52,54 @@ margin-bottom: 10px;
     letter-spacing: 2px;
     color: #efefef;
 }
-   
+/* navbar css */
+.navbar
+{
+    background-color: #1d263bc7;
+}
+.navbar ul
+{
+    background-color: #1d263bc7;
+    display: inline;
+}
+.navbar ul >li
+{
+    background-color: #1d263bc7;
+    display: inline;
+    padding: 10px;
+    margin-left: 40px;
+    color: white;
+}
+.navbar ul >form
+{
+    background-color: #1d263bc7 ;
+    display: inline;
+    margin-left: 40px;
+}
+.navbar button
+{
+     margin-left: 40px;
+    border : solid rgb(255, 255, 255) 2px;
+    border-radius: 25px;
+    padding: 10px;
+    color: white;
+}
+.navbar i
+{
+    color: white; 
+    font-size : 30px;
+    cursor: pointer;
+}
+.navbar input
+{
+     margin-left: 40px;
+    border : solid rgb(255, 255, 255) 2px;
+    border-radius: 25px;
+    padding: 10px;
+    color: black;
+    background-color: #efefef;
+    
+}
+
  
 
