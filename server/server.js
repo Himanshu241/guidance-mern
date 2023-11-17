@@ -118,6 +118,26 @@ app.post('/login', async (req, res) => {
     
 });
 
+app.get('/:searchTerm/search', async (req, res) => {
+  try {
+    const {searchTerm} = req.params;
+    console.log(searchTerm);
+
+    // Perform the search
+    const results = await Question.find({
+      $or: [
+        { title: { $regex: searchTerm, $options: 'i' } }, // 'i' for case-insensitive
+        { body: { $regex: searchTerm, $options: 'i' } },
+      ],
+    }).exec();
+
+    res.json(results);
+    console.log(results)
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT;

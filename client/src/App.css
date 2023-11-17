@@ -123,5 +123,129 @@ form button
     display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 2%;
+  margin-top: 4%;
+}
+
+/* navbar css */
+.navbar
+{
+    background-color: #1d263bc7;
+  
+    padding: 15px;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    transition: background-color 0.3s ease; /* Add smooth transition effect */
+    z-index: 1000;
+    
+    
+}
+.navbar ul
+{
+    background-color: #1d263bc7;
+    display: inline;
+}
+.navbar ul >li
+{
+    background-color: #1d263bc7;
+    display: inline;
+    padding: 10px;
+    margin-left: 40px;
+    color: white;
+}
+.navbar ul >form
+{
+    background-color: #1d263bc7 ;
+    display: inline;
+    margin-left: 40px;
+}
+.navbar button
+{
+     margin-left: 40px;
+    border : solid rgb(255, 255, 255) 2px;
+    border-radius: 25px;
+    padding: 10px;
+    color: white;
+}
+.navbar i
+{
+    color: white; 
+    font-size : 30px;
+    cursor: pointer;
+}
+.navbar input
+{
+     margin-left: 40px;
+    border : solid rgb(255, 255, 255) 2px;
+    border-radius: 25px;
+    padding: 10px;
+    color: black;
+    background-color: #efefef;
+
+}
+/*OVERLAY + BUTTON CSS*/
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+  }
+  
+  .overlay-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  .adjust
+  {
+    margin-left: 395px;
+    border : solid rgb(255, 255, 255) 2px;
+    color: #efefef;
+    border-radius: 55px;
+    padding: 40px;
+  }
+  textarea {
+    background-color: #e6e6e6;
+}
+
+
+input {
+    background-color: #e6e6e6;
+}
+.fixed-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color:rgba(0, 128, 0, 0.3) ;
+    z-index: 2;
+  }
+.close{
+    background-color: red;
+    color:black;
+}
+.add-question{
+    color: black;
+}
+.center-search-container{
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 7%;
+}
+.search-input{
+    margin-left: 40px;
+    border : solid rgb(255, 255, 255) 2px;
+    border-radius: 25px;
+    padding: 10px;
+    color: black;
+    background-color: #efefef;
+
 }

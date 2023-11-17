@@ -18,7 +18,7 @@ const Intro = () => {
     <video src ={video} autoPlay muted loop/>
       <div className='border'>
       <div className='title-container mx-auto'>
-        <h1 className='title'>MargDarshan</h1>
+        <h1 className='title '>MargDarshan</h1>
       </div>
     <div className='intro-btn-container'>
     <button type='button' className="btn btn-primary btn-block"  onClick={handleSignIn}>sign-in</button>

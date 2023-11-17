@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import AnswerWidget from './answerwidget';
 
 function FeedPost({ questionId, name, title, body, tags, createdAt, answers }) {
   const [isOpen, setIsOpen] = useState(false);
   const [answer, setAnswer] = useState('');
   const userId = useSelector((state) => state.auth.user._id);
   const userName = useSelector((state) => state.auth.user.name);
+  const [displayedAnswers, setDisplayedAnswers] = useState(2);
+
 
   const toggleDiv = () => {
     setIsOpen(!isOpen);
@@ -34,10 +37,11 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers }) {
   const handleAnswer = async (e) => {
     e.preventDefault();
     await addAnswer(id, { body: answer, name: userName, createdBy: userId });
+    setIsOpen(!isOpen);
   };
 
   const handleFullPost = () => {
-    
+    setDisplayedAnswers(displayedAnswers + 2); 
   };
 
   return (
@@ -48,10 +52,16 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers }) {
         <div className="card-body">
           <h5 className="card-title">{body}</h5>
           <h3 className='font-weight-bold text-uppercase'>Answers</h3>
-          <p className="card-text">{answers.map((answer, index) => <span key={index}>{answer.body}</span>)}</p>
-          <button onClick={handleFullPost} className="btn btn-link mb-1">
-            Show full post..
-          </button>
+          {answers.slice(0, displayedAnswers).map((answer, index) => (
+        <span key={index}>
+          <AnswerWidget name={answer.name} body={answer.body} />
+        </span>
+      ))}
+      {answers.length > displayedAnswers && (
+        <button onClick={handleFullPost} className="btn btn-link mb-1">
+          Show more answers..
+        </button>
+      )}
           <div>
             <button onClick={toggleDiv} className="btn btn-success">
               Add an Answer

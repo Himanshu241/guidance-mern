@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 
-const AddQuestion = () => {
+const AddQuestion = ({sharedState, updateSharedState}) => {
 
 const userId = useSelector((state)=>state.auth.user._id);  
 const name = useSelector((state)=>state.auth.user.name);
@@ -37,6 +37,7 @@ const token = useSelector((state)=>state.auth.token);
   
       // Handle the response as needed (e.g., show a success message, reset form)
       console.log('Question added successfully:', response.data);
+      updateSharedState(!sharedState);
   
       // Reset the form
       setQuestionData({
@@ -48,8 +49,9 @@ const token = useSelector((state)=>state.auth.token);
       });
     } catch (error) {
       console.error('Error adding question:', error);
-      // Handle error (e.g., show an error message)
+      
     }
+
   };
   
 
@@ -83,7 +85,7 @@ const token = useSelector((state)=>state.auth.token);
             onChange={handleInputChange}
           />
         </div>
-        <button type="button" onClick={handleAddQuestion}>
+        <button className='btn btn-success add-question' type="button" onClick={handleAddQuestion}>
           Add Question
         </button>
       </form>

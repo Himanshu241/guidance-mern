@@ -21,6 +21,10 @@ const UserSchema = new mongoose.Schema({
     },
     
     occupation: String,
+    isMentor:{
+        type:Boolean,
+        default: false
+    }
     
     
 
