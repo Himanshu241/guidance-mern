@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import FeedPost from './feedPost';
 import axios from 'axios';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
 const Feeds = () => {
 
   const [questions, setQuestions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const token = useSelector((state)=>state.auth.token);
 
   const search = async () => {
     try {
       console.log(searchTerm)
-      const response = await axios.get(`http://localhost:3001/${searchTerm}/search/` );
+      const response = await axios.get(`http://localhost:3001/${searchTerm}/search/`,{
+        headers:{
+          'Authorization':token
+        }
+      } );
       setSearchResults(response.data);
       setQuestions(searchResults);
       console.log(questions)
@@ -20,7 +26,11 @@ const Feeds = () => {
   };
   const getQuestions=async()=>{
     try {
-      const response = await fetch('http://localhost:3001/getQuestions/');
+      const response = await fetch('http://localhost:3001/getQuestions/',{
+        headers:{
+          'Authorization': token
+        }
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -39,17 +49,17 @@ const Feeds = () => {
   <>
    {/* Question Search Box */}
    <div className='center-search-container'>
-   <form onSubmit={(e) => { e.preventDefault(); search(); }}>
+   
        
        <input
          type="text"
          className='search-input'
          placeholder="Search a question"
          value={searchTerm}
-         onChange={(e) => setSearchTerm(e.target.value)}
+         onChange={(e) => {setSearchTerm(e.target.value); search();}}
        />
-       <button type="submit">SEARCH</button>
-     </form>
+       
+     
    </div>
 
   <div>{searchTerm.length !==0 ?searchResults.map(question=>{return <FeedPost key={question._id} 
@@ -58,7 +68,7 @@ const Feeds = () => {
     title={question.title} 
     body={question.body}
     tags={question.tags}
-    createdAt={question.createdAt}
+    createdAt={new Date(question.createdAt)}
     answers={question.answers}/>})
     : questions.map(question=>{return <FeedPost key={question._id} 
       questionId={question._id}
@@ -66,7 +76,7 @@ const Feeds = () => {
       title={question.title} 
       body={question.body}
       tags={question.tags}
-      createdAt={question.createdAt}
+      createdAt={new Date(question.createdAt)}
       answers={question.answers}/>})}</div>
     </>
   );

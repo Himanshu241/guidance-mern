@@ -5,8 +5,8 @@ import { combineReducers } from '@reduxjs/toolkit';
 import authReducer from './index';
 
 const rootReducer = combineReducers({
-    auth: authReducer
-
+    auth: authReducer,
+    
   // Add more reducers as needed
 });
 

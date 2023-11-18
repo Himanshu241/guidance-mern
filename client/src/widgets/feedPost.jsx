@@ -8,6 +8,8 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers }) {
   const [answer, setAnswer] = useState('');
   const userId = useSelector((state) => state.auth.user._id);
   const userName = useSelector((state) => state.auth.user.name);
+  const token = useSelector((state)=>state.auth.token);
+
   const [displayedAnswers, setDisplayedAnswers] = useState(2);
 
 
@@ -24,7 +26,11 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers }) {
   const addAnswer = async (id, answerData) => {
     try {
       console.log(answerData);
-      const response = await axios.post(`http://localhost:3001/question/${id}/answer`, answerData);
+      const response = await axios.post(`http://localhost:3001/question/${id}/answer`, answerData,{
+        headers:{
+          'Authorization': token
+        }
+      });
 
       // Handle the response as needed
       console.log('Answer added successfully:', response.data);
@@ -54,7 +60,7 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers }) {
           <h3 className='font-weight-bold text-uppercase'>Answers</h3>
           {answers.slice(0, displayedAnswers).map((answer, index) => (
         <span key={index}>
-          <AnswerWidget name={answer.name} body={answer.body} />
+          <AnswerWidget name={answer.name} body={answer.body}createdAt={new Date(answer.createdAt)}/>
         </span>
       ))}
       {answers.length > displayedAnswers && (
@@ -80,7 +86,7 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers }) {
           </div>
         </div>
         <div>{tags.map((tag, index) => <a key={index} href="#" className="badge badge-secondary m-1">{tag}</a>)}</div>
-        <div className="card-footer text-muted">{createdAt}</div>
+        <div className="card-footer text-muted">{createdAt.toLocaleString()}</div>
       </div>
     </div>
   );

@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
-
+import { useDispatch } from 'react-redux';
 const AddQuestion = ({sharedState, updateSharedState}) => {
 
 const userId = useSelector((state)=>state.auth.user._id);  
 const name = useSelector((state)=>state.auth.user.name);
-
 const token = useSelector((state)=>state.auth.token);
   const [questionData, setQuestionData] = useState({
     name:'',
@@ -33,8 +32,14 @@ const token = useSelector((state)=>state.auth.token);
   
       console.log(updatedQuestionData);
   
-      const response = await axios.post('http://localhost:3001/question/', updatedQuestionData);
-  
+      const response = await axios.post('http://localhost:3001/question/', updatedQuestionData,{
+        headers:{
+          'Authorization': token
+        }
+      });
+      
+    
+      
       // Handle the response as needed (e.g., show a success message, reset form)
       console.log('Question added successfully:', response.data);
       updateSharedState(!sharedState);

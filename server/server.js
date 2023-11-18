@@ -56,13 +56,13 @@ app.post('/login', async (req, res) => {
     }
 
     // Generate and send a JWT token
-    const token = await jwt.sign({ userId: user.userId },process.env.JWT_SECRET,{ expiresIn: '1h' });
+    const token = await jwt.sign({ userId: user.userId },process.env.JWT_SECRET);
     console.log(token)
     delete user.password;
     res.status(200).json({ token,user});
   });
 
-  app.post('/question', async(req, res)=>{
+  app.post('/question',verifyToken, async(req, res)=>{
     try{
         const {name, title, body, tags, createdBy} = req.body;
         const tagsList = tags.split(',');
@@ -78,7 +78,7 @@ app.post('/login', async (req, res) => {
     }
 }
     );
-  app.get('/getQuestions',async(req, res)=>{
+  app.get('/getQuestions',verifyToken, async(req, res)=>{
     try {
         const questions = await Question.find();
         
@@ -88,7 +88,7 @@ app.post('/login', async (req, res) => {
     }
   })
 
- app.post('/question/:id/answer', async(req,res)=>{
+ app.post('/question/:id/answer',verifyToken, async(req,res)=>{
   try {
     const { id } = req.params;
     const { body, name, createdBy } = req.body;
@@ -118,7 +118,7 @@ app.post('/login', async (req, res) => {
     
 });
 
-app.get('/:searchTerm/search', async (req, res) => {
+app.get('/:searchTerm/search',verifyToken, async (req, res) => {
   try {
     const {searchTerm} = req.params;
     console.log(searchTerm);
