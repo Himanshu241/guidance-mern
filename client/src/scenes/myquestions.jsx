@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import {  useSelector } from 'react-redux/es/hooks/useSelector';
 import FeedPost from '../widgets/feedPost';
+import Navbar from '../widgets/navbar';
 const MyQuestions= () =>{
     const name = useSelector((state)=>state.auth.user.name);
     const [myQuestions, setMyQuestions] = useState([]);
@@ -26,7 +27,9 @@ const MyQuestions= () =>{
     },[])
     
   return (
-    <div>
+    <>
+      <Navbar/>
+      <div className='myQuestions-container'>
         {myQuestions.map(question=>{return <FeedPost key={question._id} 
         questionId={question._id}
         name = {question.name}
@@ -36,8 +39,9 @@ const MyQuestions= () =>{
         createdAt={new Date(question.createdAt)}
         answers={question.answers}/>})
 }
-
 </div>
+
+</>
   )}; 
 
 export default MyQuestions

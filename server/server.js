@@ -14,9 +14,9 @@ import Pdf from './models/pdf.js';
 //configurations
 dotenv.config();
 const app = express();
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -51,6 +51,35 @@ app.post('/:id/upload',verifyToken, upload.array('pdf', 5), async (req, res) => 
     res.status(500).send('Internal Server Error');
   }
 });
+// Route to update user
+// Update user by ID
+app.put('/users/:id',verifyToken, upload.single('profileImage'), async (req, res) => {
+  const userId = req.params.id;
+  const updateData = req.body;
+
+  try {
+    // If a profile image is uploaded, update the profileImage field
+    if (req.file) {
+      // Access the file buffer from memory storage
+      const imageBuffer = req.file.buffer;
+      // You may want to store this buffer in a more appropriate way based on your use case
+      updateData.profileImage = imageBuffer.toString('base64');
+    }
+
+    // Find the user by ID and update the fields
+    const updatedUser = await User.findByIdAndUpdate(userId, updateData, { new: true });
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 app.post("/register",async (req, res)=>{
     try{
         
@@ -98,10 +127,10 @@ app.post('/login', async (req, res) => {
 
   app.post('/question',verifyToken, async(req, res)=>{
     try{
-        const {name, title, body, tags, createdBy} = req.body;
+        const {name, title, body, tags, createdBy,profileImage} = req.body;
         const tagsList = tags.split(',');
         console.log(tagsList)
-        const newQuestion =await new Question({name, title, body, tags:tagsList, createdBy});
+        const newQuestion =await new Question({name, title, body, tags:tagsList, createdBy,profileImage:profileImage});
         const response = await newQuestion.save()
         .then(question => {
         console.log('Question saved:', question);
@@ -125,7 +154,7 @@ app.post('/login', async (req, res) => {
  app.post('/question/:id/answer',verifyToken, async(req,res)=>{
   try {
     const { id } = req.params;
-    const { body, name, createdBy } = req.body;
+    const { body, name, createdBy, profileImage } = req.body;
 
     const question = await Question.findById(id);
 
@@ -137,9 +166,10 @@ app.post('/login', async (req, res) => {
       body,
       name,
       createdBy,
+      profileImage
+    
     };
-    console.log(newAnswer)
-    console.log(id)
+    
 
     question.answers.push(newAnswer);
     await question.save();

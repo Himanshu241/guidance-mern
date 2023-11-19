@@ -19,6 +19,7 @@ const UserSchema = new mongoose.Schema({
             required : true,
             min: 5, 
     },
+    profileImage:String ,
     
     occupation: String,
     isMentor:{

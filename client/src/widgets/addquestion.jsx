@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
-import { useDispatch } from 'react-redux';
 const AddQuestion = ({sharedState, updateSharedState}) => {
 
 const userId = useSelector((state)=>state.auth.user._id);  
 const name = useSelector((state)=>state.auth.user.name);
 const token = useSelector((state)=>state.auth.token);
+const profileImage = useSelector((state)=>state.auth.user.profileImage);
+const [isLoading, setIsLoading] = useState(false);
   const [questionData, setQuestionData] = useState({
     name:'',
     title: '',
     body: '',
     tags: '',
-    createdBy: ''
+    createdBy: '',
+    profileImage:''
   });
 
 
@@ -23,11 +25,13 @@ const token = useSelector((state)=>state.auth.token);
 
   const handleAddQuestion = async () => {
     try {
+      setIsLoading(true);
       // Use the state directly here
       const updatedQuestionData = {
         ...questionData,
         createdBy: userId,
-        name: name
+        name: name,
+        profileImage:profileImage
       };
   
       console.log(updatedQuestionData);
@@ -42,6 +46,7 @@ const token = useSelector((state)=>state.auth.token);
       
       // Handle the response as needed (e.g., show a success message, reset form)
       console.log('Question added successfully:', response.data);
+      setIsLoading(false);
       updateSharedState(!sharedState);
   
       // Reset the form
@@ -50,7 +55,9 @@ const token = useSelector((state)=>state.auth.token);
         title: '',
         body: '',
         tags: '',
-        createdBy: ''
+        createdBy: '',
+        profileImage:''
+       
       });
     } catch (error) {
       console.error('Error adding question:', error);
@@ -94,6 +101,20 @@ const token = useSelector((state)=>state.auth.token);
           Add Question
         </button>
       </form>
+      {isLoading && <div class="spinner center">
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+</div>}
     </div>
   );
 };

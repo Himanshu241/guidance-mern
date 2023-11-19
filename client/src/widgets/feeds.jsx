@@ -39,6 +39,7 @@ const Feeds = () => {
       const data = await response.json();
      
       setQuestions(data);
+      console.log(questions)
     } catch (error) {
       console.error('Error fetching items:', error);
 
@@ -82,6 +83,7 @@ const Feeds = () => {
       body={question.body}
       tags={question.tags}
       createdAt={new Date(question.createdAt)}
+      profileImage = {question.profileImage}
       answers={question.answers}/>})
       : questions.map(question=>{return <FeedPost key={question._id} 
         questionId={question._id}
@@ -90,6 +92,7 @@ const Feeds = () => {
         body={question.body}
         tags={question.tags}
         createdAt={new Date(question.createdAt)}
+        profileImage = {question.profileImage}
         answers={question.answers}/>})}</div>
       </>
     );

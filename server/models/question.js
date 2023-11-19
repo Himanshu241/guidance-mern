@@ -17,6 +17,7 @@ const questionSchema = new mongoose.Schema({
     required: true,
   },
   tags: [String],
+  profileImage:String,
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -30,6 +31,7 @@ const questionSchema = new mongoose.Schema({
     {
       body: String,
       name: String,
+      profileImage: String,
       createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

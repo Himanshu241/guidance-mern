@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios';
+import Navbar from '../widgets/navbar';
 import { useState } from 'react';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 function Registration() {
@@ -48,6 +49,8 @@ function Registration() {
     };
   
     return (
+      <>
+      <Navbar/>
       <div className='center-container-upload inline-element'>
        
         <h1 className='inline-element upload-title mb-5'>Select Relevant PDF files(Can select upto 5 files):</h1>
@@ -71,6 +74,7 @@ function Registration() {
         <p className='display-upload-text'>{displayText}</p>
       </div>
       </div>
+      </>
     );
   
 }
