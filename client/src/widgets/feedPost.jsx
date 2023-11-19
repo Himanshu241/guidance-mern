@@ -53,6 +53,7 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers }) {
   return (
     <div className='center-container'>
       <div className="card w-75 text-center mb-1">
+        
         <h3 className='font-weight-bold text-uppercase'>{name}</h3>
         <div className="card-header font-weight-bold">{title}</div>
         <div className="card-body">

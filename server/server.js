@@ -8,7 +8,8 @@ import User from './models/user.js';
 import jwt from 'jsonwebtoken'
 import Question from './models/question.js';
 import { verifyToken } from './middleware/auth.js';
-
+import multer from 'multer';
+import Pdf from './models/pdf.js';
 
 //configurations
 dotenv.config();
@@ -16,7 +17,40 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
-//POST Routes
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+//route with pdf upload
+app.post('/:id/upload',verifyToken, upload.array('pdf', 5), async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id)
+
+    const pdfs = req.files;
+
+    if (!pdfs || pdfs.length === 0) {
+      return res.status(400).send('No files were uploaded.');
+    }
+
+    const uploadPromises = pdfs.map(async (pdf) => {
+      const { originalname, buffer } = pdf;
+      const newPdf = new Pdf({
+        id: id,
+        fileName: originalname,
+        data: buffer,
+      });
+      await newPdf.save();
+    });
+
+    await Promise.all(uploadPromises);
+
+    res.status(201).send('PDFs uploaded successfully');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 app.post("/register",async (req, res)=>{
     try{
         
@@ -135,6 +169,19 @@ app.get('/:searchTerm/search',verifyToken, async (req, res) => {
     console.log(results)
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+app.get('/questions/:name',verifyToken, async (req, res) => {
+  try {
+    const questions = await Question.find({ name: req.params.name });
+   
+    if (questions.length === 0) {
+      return res.status(404).json({ message: 'No questions found with the specified name.' });
+    }
+
+    res.status(200).json(questions);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 

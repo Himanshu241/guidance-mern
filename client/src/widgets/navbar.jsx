@@ -1,9 +1,13 @@
 import React from 'react'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 function Navbar() {
-    
+    const navigate = useNavigate();
     const refresh=()=>{
         window.location.reload();
+    }
+    const registrationPortal=()=>{
+        navigate('/registrationPage');
     }
    return(
         <>
@@ -16,7 +20,7 @@ function Navbar() {
                    <i class="fa-solid fa-user"></i> <a href="#"> PROFILE </a>
                 </li>
                 <li>
-                <i class="fa-brands fa-glide-g"></i> <a href="#">MENTOR</a>
+                <i class="fa-brands fa-glide-g"></i> <a href="#" onClick={registrationPortal}>MENTOR</a>
                 </li>
             <form action="#">
             
@@ -26,6 +30,7 @@ function Navbar() {
                 <button type="button">SEARCH</button>
             </form>
             </ul>
+           
         </div>
         <br/>
         </>

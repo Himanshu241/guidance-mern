@@ -4,6 +4,8 @@ import Intro from './scenes/intro.jsx'
 import SigninForm from './scenes/signInPage.jsx';
 import './App.css'
 import Home from './scenes/home.jsx';
+import MyQuestions from './scenes/myquestions.jsx';
+import Registration from './scenes/registration.jsx';
 import { useSelector } from 'react-redux/es/hooks/useSelector.js';
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
             <Route path="/" element={<Intro/>}></Route>
             <Route path="/signUp" element={<SignupForm/>}></Route>
             <Route path="/signIn" element={<SigninForm/>}></Route>
+            <Route path='/myQuestions' element={<MyQuestions/>}></Route>
+            <Route path='/registrationPage' element={<Registration/>}></Route>
         </Routes>
        
       </BrowserRouter> 

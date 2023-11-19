@@ -23,7 +23,10 @@ function Home() {
     <Feeds/>  
 
     {/* Add question button and overlay form */}
+   
+
     <button type='button' className='adjust fixed-button btn btn-primary' onClick={toggleOverlay}>ADD A QUESTION</button>
+    
       {showOverlay && (
         <div className="overlay">
           <div className="overlay-content">
