@@ -230,6 +230,19 @@ app.get('/questions/:name',verifyToken, async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+app.get('/searchMentor',verifyToken, async (req, res) => {
+  const { query } = req.query;
+
+  try {
+    // Use a regex for case-insensitive partial matching
+    const users = await User.find({ occupation: { $regex: new RegExp(query, 'i') } });
+
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 
 /* MONGOOSE SETUP */

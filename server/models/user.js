@@ -25,8 +25,8 @@ const UserSchema = new mongoose.Schema({
     isMentor:{
         type:Boolean,
         default: false
-    }
-    
+    },
+    bio:String
     
 
 },

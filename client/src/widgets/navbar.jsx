@@ -12,6 +12,9 @@ function Navbar() {
     const profilePage=()=>{
         navigate('/profilePage');
     }
+    const mentorPage=()=>{
+        navigate('/mentorPage');
+    }
 
    return(
         <>
@@ -26,13 +29,9 @@ function Navbar() {
                 <li>
                 <i class="fa-brands fa-glide-g"></i> <a href="" onClick={registrationPortal}>MENTOR REGISTRATION</a>
                 </li>
-            <form action="">
             
-                <input type="text"
-                       placeholder=" Search Guide"
-                       name="search"/>
-                <button type="button">SEARCH</button>
-            </form>
+                <button type="button" onClick={mentorPage} >SEARCH A MENTOR</button>
+            
             </ul>
            
         </div>

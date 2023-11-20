@@ -84,9 +84,7 @@ const Feeds = () => {
     </g>
   </svg>
 </div>
-</div>
-         
-       
+</div> 
      </div>
      <button type='button' className='adjust fixed-button-2 btn btn-primary' onClick={myQuestionsPage}>My Questions</button>
 

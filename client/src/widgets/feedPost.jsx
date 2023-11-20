@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import AnswerWidget from './answerwidget';
-import logo from '../Logo/LOGO1.png'
 function FeedPost({ questionId, name, title, body, tags, createdAt, answers, showLogo }) {
   const [isOpen, setIsOpen] = useState(false);
   const [answer, setAnswer] = useState('');
@@ -54,16 +53,7 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers, sho
   return (
     <div className='center-container'>
       <div className="card w-75 text-center mb-1">
-         {/* Logo based on showLogo prop */}
-         {showLogo && (
-          <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
-            <img
-              src={logo} // Replace with the actual path to your logo image
-              alt="Logo"
-              style={{ width: '30px', height: '30px' }}
-            />
-          </div>
-        )}
+        
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
         {profileImage && (

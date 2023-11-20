@@ -3,11 +3,16 @@ import Navbar from '../widgets/navbar'
 import axios from 'axios';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import logo from '../Logo/LOGO1.png'
 function Profile() {
     const userId = useSelector((state)=>state.auth.user._id);
     const name = useSelector((state)=>state.auth.user.name);
     const email = useSelector((state)=>state.auth.user.email);
+    const showLogo = useSelector((state)=>state.auth.user.isMentor);
     const occupation = useSelector((state)=>state.auth.user.occupation);
+    const profileImage = useSelector((state)=>state.auth.user.profileImage)
+    const bio = useSelector((state)=>state.auth.user.bio)
+
     const [isLoading, setIsLoading] = useState(false);
     const token = useSelector((state)=>state.auth.token);
     const [updateStatus, setUpdateStatus] = useState('');
@@ -16,6 +21,7 @@ function Profile() {
         email: email,
         occupation: occupation,
         profileImage: null,
+        bio:bio
       });
     
       const handleInputChange = (e) => {
@@ -59,12 +65,23 @@ function Profile() {
     <Navbar/>
 
     {/* Update Section */}
-    
+    {/* Logo based on showLogo prop */}
+    {showLogo && (
+        <div style={{ position: 'absolute', top: '100px', right: '100px', zIndex: 1 }}>
+          <img
+            src={logo}  // Replace with the actual path to your logo image
+            alt="Logo"
+            style={{ width: '100px', height: '100px' }}
+          />
+          <p className='display-upload-text'>You are a Mentor.</p>
+        </div>
+      )}
 
-  return (
+ 
     <div className='update-container center-container-update'>
-
+      
       <h2 className='upload-title mb-5'>Update Profile</h2>
+       
       <label className='update-label'>Profile Image:</label>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div
@@ -102,6 +119,7 @@ function Profile() {
           name="profileImage"
           style={{ display: 'none' }}
           onChange={handleFileChange}
+          
         />
       </div>
       <br/>
@@ -118,7 +136,9 @@ function Profile() {
       <label className='update-label'>Occupation :  </label>
       <input className='search-input' style={{marginBottom:'3%'}} type="text" name="occupation" value={userData.occupation} onChange={handleInputChange} />
       <br />
-
+      <label className='update-label'>Bio :  </label>
+      <textarea className='search-input' style={{marginBottom:'3%'}} value={userData.bio} type="text" name="bio"  onChange={handleInputChange} />
+      <br />
 
       <button  className=' shadow__btn' onClick={handleUpdateProfile}>Update Profile</button>
       <div style={{marginTop:'4%'}}>
@@ -141,7 +161,7 @@ function Profile() {
   </div>
     </div>
     
-  );
+  
   
     </>
   )

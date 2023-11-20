@@ -8,6 +8,7 @@ import MyQuestions from './scenes/myquestions.jsx';
 import Registration from './scenes/registration.jsx';
 import Profile from './scenes/profile.jsx';
 import { useSelector } from 'react-redux/es/hooks/useSelector.js';
+import MentorPage from './scenes/mentorPage.jsx';
 
 function App() {
   const isAuth = Boolean(useSelector((state)=> state.auth.token));
@@ -25,6 +26,7 @@ function App() {
             <Route path='/myQuestions' element={<MyQuestions/>}></Route>
             <Route path='/registrationPage' element={<Registration/>}></Route>
             <Route path='/profilePage' element={<Profile/>}></Route>
+            <Route path='/mentorPage' element={<MentorPage/>}></Route>
         </Routes>
        
       </BrowserRouter> 
