@@ -9,6 +9,7 @@ function Profile() {
     const email = useSelector((state)=>state.auth.user.email);
     const occupation = useSelector((state)=>state.auth.user.occupation);
     const [isLoading, setIsLoading] = useState(false);
+    const token = useSelector((state)=>state.auth.token);
     const [updateStatus, setUpdateStatus] = useState('');
     const [userData, setUserData] = useState({
         name: name,
@@ -39,6 +40,7 @@ function Profile() {
           const response = await axios.put(`http://localhost:3001/users/${userId}`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
+              'Authorization':token
             },
           });
     if(response.status === 200){
@@ -48,6 +50,7 @@ function Profile() {
           console.log('User profile updated successfully!');
         } catch (error) {
           console.error('Error updating user profile:', error);
+          setIsLoading(false);
         }
       };
 

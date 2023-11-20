@@ -4,15 +4,12 @@ import Foot from '../widgets/Foot';
 import AddQuestion from '../widgets/addquestion';
 import Navbar from '../widgets/navbar';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 function Home() {
-  const [showOverlay, setShowOverlay] = useState(false);
+  const profile = useSelector((state)=>state.auth.user.profileImage);
+  console.log(profile)
   
- 
-  
-  const toggleOverlay = () => {
-    setShowOverlay(!showOverlay);
-  }
   return (
     <>
     <Navbar/>
@@ -25,16 +22,7 @@ function Home() {
     {/* Add question button and overlay form */}
    
 
-    <button type='button' className='adjust fixed-button btn btn-primary' onClick={toggleOverlay}>ADD A QUESTION</button>
     
-      {showOverlay && (
-        <div className="overlay">
-          <div className="overlay-content">
-          <AddQuestion sharedState={showOverlay} updateSharedState={setShowOverlay}/> 
-          <button type='button' className='close btn btn-danger' onClick={toggleOverlay}>Close</button>
-          </div>
-        </div>
-      )}
 
       {/* Footer section */}
     <Foot/>

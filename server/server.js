@@ -11,15 +11,30 @@ import { verifyToken } from './middleware/auth.js';
 import multer from 'multer';
 import Pdf from './models/pdf.js';
 
+
 //configurations
 dotenv.config();
 const app = express();
 app.use(express.json({limit: '50mb'}));
 app.use(cors());
 app.use(bodyParser.json({limit: '50mb'}));
-
+app.use('/uploads', express.static('uploads'));
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+
+const storageProfile = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads')
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix);
+  },
+});
+
+const uploadProfile = multer({ storage: storageProfile });
+
+
 
 //route with pdf upload
 app.post('/:id/upload',verifyToken, upload.array('pdf', 5), async (req, res) => {
@@ -53,17 +68,18 @@ app.post('/:id/upload',verifyToken, upload.array('pdf', 5), async (req, res) => 
 });
 // Route to update user
 // Update user by ID
-app.put('/users/:id',verifyToken, upload.single('profileImage'), async (req, res) => {
+app.put('/users/:id', verifyToken, uploadProfile.single('profileImage'), async (req, res) => {
   const userId = req.params.id;
   const updateData = req.body;
 
   try {
-    // If a profile image is uploaded, update the profileImage field
+    // If a profile image is uploaded, update the profileImage field with the file path
     if (req.file) {
-      // Access the file buffer from memory storage
-      const imageBuffer = req.file.buffer;
-      // You may want to store this buffer in a more appropriate way based on your use case
-      updateData.profileImage = imageBuffer.toString('base64');
+      const filename = req.file.filename;
+      
+      console.log(req.file)
+      // File has been written to the 'uploads' folder
+      updateData.profileImage = `/uploads/${filename}`;
     }
 
     // Find the user by ID and update the fields
@@ -127,10 +143,10 @@ app.post('/login', async (req, res) => {
 
   app.post('/question',verifyToken, async(req, res)=>{
     try{
-        const {name, title, body, tags, createdBy,profileImage} = req.body;
+        const {name, title, body, tags, createdBy,profileImage, isMentor} = req.body;
         const tagsList = tags.split(',');
         console.log(tagsList)
-        const newQuestion =await new Question({name, title, body, tags:tagsList, createdBy,profileImage:profileImage});
+        const newQuestion =await new Question({name, title, body, tags:tagsList, createdBy,profileImage:profileImage,isMentor:isMentor});
         const response = await newQuestion.save()
         .then(question => {
         console.log('Question saved:', question);
@@ -154,7 +170,7 @@ app.post('/login', async (req, res) => {
  app.post('/question/:id/answer',verifyToken, async(req,res)=>{
   try {
     const { id } = req.params;
-    const { body, name, createdBy, profileImage } = req.body;
+    const { body, name, createdBy, profileImage,isMentor } = req.body;
 
     const question = await Question.findById(id);
 
@@ -166,8 +182,8 @@ app.post('/login', async (req, res) => {
       body,
       name,
       createdBy,
-      profileImage
-    
+      profileImage,
+      isMentor
     };
     
 

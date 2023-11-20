@@ -1,58 +1,72 @@
+// Feeds.jsx
 import React, { useEffect, useState } from 'react';
 import FeedPost from './feedPost';
 import axios from 'axios';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { useNavigate } from 'react-router-dom';
+import AddQuestion from './addquestion';
 const Feeds = () => {
-
   const [questions, setQuestions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const token = useSelector((state)=>state.auth.token);
+  const [newQuestionFlag, setNewQuestionFlag] = useState(false); // State to track new questions
+  const token = useSelector((state) => state.auth.token);
+  const [sharedState, updateSharedState] = useState(false);
   const navigate = useNavigate();
 
   const search = async () => {
     try {
-      console.log(searchTerm)
-      const response = await axios.get(`http://localhost:3001/${searchTerm}/search/`,{
-        headers:{
-          'Authorization':token
+      const response = await axios.get(`http://localhost:3001/${searchTerm}/search/`, {
+        headers: {
+          'Authorization': token
         }
-      } );
+      });
       setSearchResults(response.data);
       setQuestions(searchResults);
-      
     } catch (error) {
       console.error('Error fetching search results:', error);
     }
   };
-  const getQuestions=async()=>{
-    try {
-      const response = await fetch('http://localhost:3001/getQuestions/',{
-        headers:{
-          'Authorization': token
-        }
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const data = await response.json();
-     
-      setQuestions(data);
-      console.log(questions)
-    } catch (error) {
-      console.error('Error fetching items:', error);
 
-    } 
-  }
-  
-  const myQuestionsPage=()=>{
+ 
+
+  const myQuestionsPage = () => {
     navigate('/myQuestions');
+  };
+
+  // Use useEffect to fetch new questions when newQuestionFlag changes
+  useEffect(() => {
+    const getQuestions = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/getQuestions/', {
+          headers: {
+            'Authorization': token
+          }
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setQuestions(data);
+      } catch (error) {
+        console.error('Error fetching items:', error);
+      }
+    };
+    getQuestions();
+  }, [questions]);
+
+  const handleNewQuestionAdded = () => {
+    // Trigger a re-fetch of questions by updating newQuestionFlag
+    setNewQuestionFlag(!newQuestionFlag);
+  };
+  const [showOverlay, setShowOverlay] = useState(false);
+  
+ 
+  
+  const toggleOverlay = () => {
+    setShowOverlay(!showOverlay);
   }
   
-  useEffect(()=>{
-    getQuestions();
-  },[questions]);
   return(
     <>
      {/* Question Search Box */}
@@ -84,7 +98,8 @@ const Feeds = () => {
       tags={question.tags}
       createdAt={new Date(question.createdAt)}
       profileImage = {question.profileImage}
-      answers={question.answers}/>})
+      answers={question.answers}
+      showLogo={question.isMentor}/>})
       : questions.map(question=>{return <FeedPost key={question._id} 
         questionId={question._id}
         name = {question.name}
@@ -93,7 +108,20 @@ const Feeds = () => {
         tags={question.tags}
         createdAt={new Date(question.createdAt)}
         profileImage = {question.profileImage}
-        answers={question.answers}/>})}</div>
+        answers={question.answers}
+        showLogo={question.isMentor}/>})}</div>
+        <button type='button' className='adjust fixed-button btn btn-primary' onClick={toggleOverlay}>ADD A QUESTION</button>
+    
+    {showOverlay && (
+      <div className="overlay">
+        <div className="overlay-content">
+        <AddQuestion sharedState={showOverlay}
+        updateSharedState={updateSharedState}
+        handleNewQuestionAdded={handleNewQuestionAdded} /> 
+        <button type='button' className='close btn btn-danger' onClick={toggleOverlay}>Close</button>
+        </div>
+      </div>
+    )}
       </>
     );
 };

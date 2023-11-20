@@ -1,12 +1,15 @@
+// addquestion.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
-const AddQuestion = ({sharedState, updateSharedState}) => {
+const AddQuestion = ({ sharedState, updateSharedState, handleNewQuestionAdded }) => {
 
 const userId = useSelector((state)=>state.auth.user._id);  
 const name = useSelector((state)=>state.auth.user.name);
 const token = useSelector((state)=>state.auth.token);
 const profileImage = useSelector((state)=>state.auth.user.profileImage);
+const isMentor = useSelector((state)=>state.auth.user.isMentor);
+console.log(profileImage)
 const [isLoading, setIsLoading] = useState(false);
   const [questionData, setQuestionData] = useState({
     name:'',
@@ -14,7 +17,8 @@ const [isLoading, setIsLoading] = useState(false);
     body: '',
     tags: '',
     createdBy: '',
-    profileImage:''
+    profileImage:'',
+    isMentor:false
   });
 
 
@@ -31,7 +35,8 @@ const [isLoading, setIsLoading] = useState(false);
         ...questionData,
         createdBy: userId,
         name: name,
-        profileImage:profileImage
+        profileImage:profileImage,
+        isMentor:isMentor
       };
   
       console.log(updatedQuestionData);
@@ -45,9 +50,11 @@ const [isLoading, setIsLoading] = useState(false);
     
       
       // Handle the response as needed (e.g., show a success message, reset form)
+      
       console.log('Question added successfully:', response.data);
+      handleNewQuestionAdded();
       setIsLoading(false);
-      updateSharedState(!sharedState);
+     
   
       // Reset the form
       setQuestionData({
@@ -56,7 +63,8 @@ const [isLoading, setIsLoading] = useState(false);
         body: '',
         tags: '',
         createdBy: '',
-        profileImage:''
+        profileImage:'',
+        isMentor:false
        
       });
     } catch (error) {

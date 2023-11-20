@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import AnswerWidget from './answerwidget';
-
-function FeedPost({ questionId, name, title, body, tags, createdAt, answers }) {
+import logo from '../Logo/LOGO1.png'
+function FeedPost({ questionId, name, title, body, tags, createdAt, answers, showLogo }) {
   const [isOpen, setIsOpen] = useState(false);
   const [answer, setAnswer] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -12,7 +12,7 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers }) {
   const token = useSelector((state)=>state.auth.token);
   const profileImage = useSelector((state)=>state.auth.user.profileImage);
   const [displayedAnswers, setDisplayedAnswers] = useState(2);
-  console.log(profileImage)
+  const isMentor = useSelector((state)=>state.auth.user.isMentor);
 
   const toggleDiv = () => {
     setIsOpen(!isOpen);
@@ -44,7 +44,7 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers }) {
 
   const handleAnswer = async (e) => {
     e.preventDefault();
-    await addAnswer(id, { body: answer, name: userName, createdBy: userId ,profileImage:profileImage});
+    await addAnswer(id, { body: answer, name: userName, createdBy: userId ,profileImage:profileImage, isMentor:isMentor});
     setIsOpen(!isOpen);
   };
 
@@ -55,14 +55,25 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers }) {
   return (
     <div className='center-container'>
       <div className="card w-75 text-center mb-1">
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-          {profileImage && (
+         {/* Logo based on showLogo prop */}
+         {showLogo && (
+          <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
             <img
-              src={`data:image/png;base64,${profileImage}`}
-              alt="Profile"
-              style={{ width: '70px', height: '70px', borderRadius: '50%', marginBottom: '10px' }}
+              src={logo} // Replace with the actual path to your logo image
+              alt="Logo"
+              style={{ width: '30px', height: '30px' }}
             />
-          )}
+          </div>
+        )}
+
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+        {profileImage && (
+        <img
+          src={`http://localhost:3001${profileImage}`}
+          alt="Profile"
+          style={{ width: '70px', height: '70px', borderRadius: '50%' }}
+        />
+      )}
           <h3 className='font-weight-bold text-uppercase'>{name}</h3>
         </div>
         <div className="card-header font-weight-bold">{title}</div>
@@ -71,7 +82,7 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers }) {
           <h3 className='font-weight-bold text-uppercase'>Answers</h3>
           {answers.slice(0, displayedAnswers).map((answer, index) => (
             <span key={index}>
-              <AnswerWidget name={answer.name} body={answer.body} createdAt={new Date(answer.createdAt)} profileImage={answer.profileImage}/>
+              <AnswerWidget name={answer.name} body={answer.body} createdAt={new Date(answer.createdAt)} profileImage={answer.profileImage} showLogo={answer.isMentor}/>
             </span>
           ))}
           {answers.length > displayedAnswers && (
