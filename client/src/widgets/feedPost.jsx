@@ -12,7 +12,6 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers, sho
   const token = useSelector((state)=>state.auth.token);
   const profileImage = useSelector((state)=>state.auth.user.profileImage);
   const [displayedAnswers, setDisplayedAnswers] = useState(2);
-  const isMentor = useSelector((state)=>state.auth.user.isMentor);
 
   const toggleDiv = () => {
     setIsOpen(!isOpen);
@@ -44,7 +43,7 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers, sho
 
   const handleAnswer = async (e) => {
     e.preventDefault();
-    await addAnswer(id, { body: answer, name: userName, createdBy: userId ,profileImage:profileImage, isMentor:isMentor});
+    await addAnswer(id, { body: answer, name: userName, createdBy: userId ,profileImage:profileImage});
     setIsOpen(!isOpen);
   };
 

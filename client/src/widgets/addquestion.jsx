@@ -8,7 +8,6 @@ const userId = useSelector((state)=>state.auth.user._id);
 const name = useSelector((state)=>state.auth.user.name);
 const token = useSelector((state)=>state.auth.token);
 const profileImage = useSelector((state)=>state.auth.user.profileImage);
-const isMentor = useSelector((state)=>state.auth.user.isMentor);
 console.log(profileImage)
 const [isLoading, setIsLoading] = useState(false);
   const [questionData, setQuestionData] = useState({
@@ -18,7 +17,7 @@ const [isLoading, setIsLoading] = useState(false);
     tags: '',
     createdBy: '',
     profileImage:'',
-    isMentor:false
+    
   });
 
 
@@ -36,7 +35,7 @@ const [isLoading, setIsLoading] = useState(false);
         createdBy: userId,
         name: name,
         profileImage:profileImage,
-        isMentor:isMentor
+        
       };
   
       console.log(updatedQuestionData);
@@ -64,7 +63,6 @@ const [isLoading, setIsLoading] = useState(false);
         tags: '',
         createdBy: '',
         profileImage:'',
-        isMentor:false
        
       });
     } catch (error) {
