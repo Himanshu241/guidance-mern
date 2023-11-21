@@ -139,7 +139,7 @@ form button
     width: 100%;
     top: 0;
     transition: background-color 0.3s ease; /* Add smooth transition effect */
-    z-index: 1000;
+    z-index: 100;
     
     
 }
@@ -655,3 +655,29 @@ input {
       background-color: transparent;
     }
   }
+ 
+
+.green-tick-container {
+    display: flex;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.green-tick {
+    width: 24px;
+    height: 24px;
+    background-color: #4CAF50; /* Green color */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    color: #fff;
+}
+
+.tick-icon {
+    font-size: 16px;
+}
+
+
+

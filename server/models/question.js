@@ -19,6 +19,7 @@ const questionSchema = new mongoose.Schema({
   
   tags: [String],
   profileImage:String,
+  isMentor:Boolean,
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -33,7 +34,7 @@ const questionSchema = new mongoose.Schema({
       body: String,
       name: String,
       profileImage: String,
-      
+      isMentor: Boolean,
       createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

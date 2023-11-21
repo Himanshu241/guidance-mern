@@ -65,17 +65,17 @@ function Profile() {
     <Navbar/>
 
     {/* Update Section */}
-    {/* Logo based on showLogo prop */}
+    {/* green tick  */}
     {showLogo && (
-        <div style={{ position: 'absolute', top: '100px', right: '100px', zIndex: 1 }}>
-          <img
-            src={logo}  // Replace with the actual path to your logo image
-            alt="Logo"
-            style={{ width: '100px', height: '100px' }}
-          />
-          <p className='display-upload-text'>You are a Mentor.</p>
-        </div>
-      )}
+            <div style={{zIndex:'111', position: 'absolute', top: '0', right: '0', marginRight: '10px', marginTop: '10px' }}>
+              <div className="green-tick-container">
+                <div className="green-tick">
+                  <div className="tick-icon">&#10004;</div>
+                </div>
+              </div>
+              <div style={{ color: 'green', fontSize: '14px' }}>Mentor</div>
+            </div>
+          )}
 
  
     <div className='update-container center-container-update'>

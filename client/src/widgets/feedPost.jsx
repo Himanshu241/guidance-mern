@@ -9,6 +9,8 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers, sho
   const userId = useSelector((state) => state.auth.user._id);
   const userName = useSelector((state) => state.auth.user.name);
   const token = useSelector((state)=>state.auth.token);
+  const isMentor = useSelector((state)=>state.auth.user.isMentor);
+
   const profileImage = useSelector((state)=>state.auth.user.profileImage);
   const [displayedAnswers, setDisplayedAnswers] = useState(2);
 
@@ -42,7 +44,7 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers, sho
 
   const handleAnswer = async (e) => {
     e.preventDefault();
-    await addAnswer(id, { body: answer, name: userName, createdBy: userId ,profileImage:profileImage});
+    await addAnswer(id, { body: answer, name: userName, createdBy: userId ,profileImage:profileImage,isMentor:isMentor});
     setIsOpen(!isOpen);
   };
 
@@ -54,7 +56,17 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers, sho
     <div className='center-container'>
       <div className="card w-75 text-center mb-1">
         
-
+         {/* green tick  */}
+         {showLogo && (
+            <div style={{ position: 'absolute', top: '0', right: '0', marginRight: '10px', marginTop: '10px' }}>
+              <div className="green-tick-container">
+                <div className="green-tick">
+                  <div className="tick-icon">&#10004;</div>
+                </div>
+              </div>
+              <div style={{ color: 'green', fontSize: '14px' }}>Mentor</div>
+            </div>
+          )}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
         {profileImage && (
         <img

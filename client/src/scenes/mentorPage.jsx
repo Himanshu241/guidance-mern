@@ -38,19 +38,24 @@ const token = useSelector((state)=>state.auth.token);
  </svg>
 </div>
 </div> 
+<div style={{color:'white', fontSize:'18px'}}>Search by domain(Field of Expertise)..</div>
     </div>
-    <h2>Search Results</h2>
+    
+    
     {searchResults.map((user)=>
     <div className='center-container'>
       <div className="card w-75 text-center mb-1">
-      <div style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1 }}>
-          <img
-            src={logo}  // Replace with the actual path to your logo image
-            alt="Logo"
-            style={{ width: '100px', height: '100px' }}
-          />
-            
-        </div>
+      {/* green tick  */}
+      
+            <div style={{ position: 'absolute', top: '0', right: '0', marginRight: '10px', marginTop: '10px' }}>
+              <div className="green-tick-container">
+                <div className="green-tick">
+                  <div className="tick-icon">&#10004;</div>
+                </div>
+              </div>
+              <div style={{ color: 'green', fontSize: '14px' }}>Mentor</div>
+            </div>
+       
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
         {user.profileImage && (

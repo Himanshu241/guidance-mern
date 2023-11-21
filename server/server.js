@@ -143,10 +143,10 @@ app.post('/login', async (req, res) => {
 
   app.post('/question',verifyToken, async(req, res)=>{
     try{
-        const {name, title, body, tags, createdBy,profileImage} = req.body;
+        const {name, title, body, tags, createdBy,profileImage, isMentor} = req.body;
         const tagsList = tags.split(',');
         console.log(tagsList)
-        const newQuestion =await new Question({name, title, body, tags:tagsList, createdBy,profileImage:profileImage});
+        const newQuestion =await new Question({name, title, body, tags:tagsList, createdBy,profileImage:profileImage, isMentor:isMentor});
         const response = await newQuestion.save()
         .then(question => {
         console.log('Question saved:', question);
@@ -170,7 +170,7 @@ app.post('/login', async (req, res) => {
  app.post('/question/:id/answer',verifyToken, async(req,res)=>{
   try {
     const { id } = req.params;
-    const { body, name, createdBy, profileImage } = req.body;
+    const { body, name, createdBy, profileImage, isMentor:isMentor} = req.body;
 
     const question = await Question.findById(id);
 
@@ -183,7 +183,7 @@ app.post('/login', async (req, res) => {
       name,
       createdBy,
       profileImage,
-      
+      isMentor
     };
     
 
