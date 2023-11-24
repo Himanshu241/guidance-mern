@@ -2,13 +2,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
-const AddQuestion = ({ sharedState, updateSharedState, handleNewQuestionAdded }) => {
+const AddQuestion = ({handleNewQuestionAdded}) => {
 
 const userId = useSelector((state)=>state.auth.user._id);  
 const name = useSelector((state)=>state.auth.user.name);
 const token = useSelector((state)=>state.auth.token);
 const profileImage = useSelector((state)=>state.auth.user.profileImage);
 const isMentor = useSelector((state)=>state.auth.user.isMentor);
+const [isSuccessMessageVisible, setSuccessMessageVisible] = useState(false);
 
 console.log(profileImage)
 const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +42,6 @@ const [isLoading, setIsLoading] = useState(false);
         isMentor: isMentor
       };
   
-      console.log(updatedQuestionData);
   
       const response = await axios.post('http://localhost:3001/question/', updatedQuestionData,{
         headers:{
@@ -55,6 +55,10 @@ const [isLoading, setIsLoading] = useState(false);
       
       console.log('Question added successfully:', response.data);
       handleNewQuestionAdded();
+      setSuccessMessageVisible(true);
+      setTimeout(() => {
+        setSuccessMessageVisible(false);
+      }, 1000);
       setIsLoading(false);
      
   
@@ -111,6 +115,11 @@ const [isLoading, setIsLoading] = useState(false);
           Add Question
         </button>
       </form>
+      {isSuccessMessageVisible && (
+        <div style={{ color: 'green', marginTop: '10px' }}>
+          Question added successfully!
+        </div>
+      )}
       {isLoading && <div class="spinner center">
     <div class="spinner-blade"></div>
     <div class="spinner-blade"></div>

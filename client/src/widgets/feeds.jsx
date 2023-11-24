@@ -9,9 +9,10 @@ const Feeds = () => {
   const [questions, setQuestions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [newQuestionFlag, setNewQuestionFlag] = useState(false); // State to track new questions
+  const [newQuestionFlag, setNewQuestionFlag] = useState(false); 
+  const [newAnswerFlag, setNewAnswerFlag] = useState(false); 
+  // State to track new questions
   const token = useSelector((state) => state.auth.token);
-  const [sharedState, updateSharedState] = useState(false);
   const navigate = useNavigate();
 
   const search = async () => {
@@ -53,12 +54,15 @@ const Feeds = () => {
       }
     };
     getQuestions();
-  }, [questions]);
+  }, [newQuestionFlag, newAnswerFlag]);
 
   const handleNewQuestionAdded = () => {
     // Trigger a re-fetch of questions by updating newQuestionFlag
-    setNewQuestionFlag(!newQuestionFlag);
+    setNewQuestionFlag((prevFlag) => !prevFlag);
   };
+  const handleNewAnswerAdded=()=>{
+    setNewAnswerFlag((prevState)=>!prevState);
+  }
   const [showOverlay, setShowOverlay] = useState(false);
   
  
@@ -97,7 +101,8 @@ const Feeds = () => {
       createdAt={new Date(question.createdAt)}
       profileImage = {question.profileImage}
       answers={question.answers}
-      showLogo={question.isMentor}/>})
+      showLogo={question.isMentor}
+      handleNewAnswerAdded={handleNewAnswerAdded}/>})
       : questions.map(question=>{return <FeedPost key={question._id} 
         questionId={question._id}
         name = {question.name}
@@ -107,15 +112,14 @@ const Feeds = () => {
         createdAt={new Date(question.createdAt)}
         profileImage = {question.profileImage}
         answers={question.answers}
-        showLogo={question.isMentor}/>})}</div>
+        showLogo={question.isMentor}
+        handleNewAnswerAdded={handleNewAnswerAdded}/>})}</div>
         <button type='button' className='adjust fixed-button btn btn-primary' onClick={toggleOverlay}>ADD A QUESTION</button>
     
     {showOverlay && (
       <div className="overlay">
         <div className="overlay-content">
-        <AddQuestion sharedState={showOverlay}
-        updateSharedState={updateSharedState}
-        handleNewQuestionAdded={handleNewQuestionAdded} /> 
+        <AddQuestion handleNewQuestionAdded={handleNewQuestionAdded}/> 
         <button type='button' className='close btn btn-danger' onClick={toggleOverlay}>Close</button>
         </div>
       </div>

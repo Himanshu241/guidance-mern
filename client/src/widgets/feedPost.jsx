@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import AnswerWidget from './answerwidget';
-function FeedPost({ questionId, name, title, body, tags, createdAt, answers, showLogo }) {
+function FeedPost({ questionId, name, title, body, tags, createdAt, answers, showLogo, handleNewAnswerAdded}) {
   const [isOpen, setIsOpen] = useState(false);
   const [answer, setAnswer] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -10,9 +10,9 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers, sho
   const userName = useSelector((state) => state.auth.user.name);
   const token = useSelector((state)=>state.auth.token);
   const isMentor = useSelector((state)=>state.auth.user.isMentor);
-
   const profileImage = useSelector((state)=>state.auth.user.profileImage);
   const [displayedAnswers, setDisplayedAnswers] = useState(2);
+
 
   const toggleDiv = () => {
     setIsOpen(!isOpen);
@@ -35,6 +35,7 @@ function FeedPost({ questionId, name, title, body, tags, createdAt, answers, sho
 
       // Handle the response as needed
       console.log('Answer added successfully:', response.data);
+      handleNewAnswerAdded();
       setIsLoading(false);
     } catch (error) {
       console.error('Error adding answer:', error);

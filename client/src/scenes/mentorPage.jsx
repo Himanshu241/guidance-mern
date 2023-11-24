@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import logo from '../Logo/LOGO1.png'
 import Navbar from '../widgets/navbar';
 function MentorPage() {
   const [searchQuery, setSearchQuery] = useState('');

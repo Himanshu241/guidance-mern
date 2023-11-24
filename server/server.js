@@ -148,9 +148,8 @@ app.post('/login', async (req, res) => {
         console.log(tagsList)
         const newQuestion =await new Question({name, title, body, tags:tagsList, createdBy,profileImage:profileImage, isMentor:isMentor});
         const response = await newQuestion.save()
-        .then(question => {
-        console.log('Question saved:', question);
-    })
+        console.log(response);
+        res.status(200).json({newQuestion});
     }
     catch(error){
       console.error('Error saving question:', error);

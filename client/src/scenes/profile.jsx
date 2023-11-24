@@ -3,7 +3,6 @@ import Navbar from '../widgets/navbar'
 import axios from 'axios';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import logo from '../Logo/LOGO1.png'
 function Profile() {
     const userId = useSelector((state)=>state.auth.user._id);
     const name = useSelector((state)=>state.auth.user.name);
