@@ -3,16 +3,20 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 function Navbar() {
     const navigate = useNavigate();
-    const refresh=()=>{
+    const home=(e)=>{
+        e.preventDefault();
         navigate('/home');
     }
-    const registrationPortal=()=>{
+    const registrationPortal=(e)=>{
+        e.preventDefault();
         navigate('/registrationPage');
     }
-    const profilePage=()=>{
+    const profilePage=(e)=>{
+        e.preventDefault();
         navigate('/profilePage');
     }
-    const mentorPage=()=>{
+    const mentorPage=(e)=>{
+        e.preventDefault();
         navigate('/mentorPage');
     }
 
@@ -21,7 +25,7 @@ function Navbar() {
         <div className="navbar">
             <ul>
                 <li>
-                    <i class="fa-solid fa-house"></i><a href="" onClick={refresh}> HOME</a>
+                    <i class="fa-solid fa-house"></i><a href="" onClick={home}> HOME</a>
                 </li>
                 <li>
                    <i class="fa-solid fa-user"></i> <a href="" onClick={profilePage}> PROFILE </a>

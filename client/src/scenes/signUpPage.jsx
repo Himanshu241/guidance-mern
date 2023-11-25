@@ -1,72 +1,120 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router-dom";
-const SignupForm = () => {
-    const navigate = useNavigate();
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
-    const [formData, setFormData] = useState({
+const SignupForm = () => {
+  const navigate = useNavigate();
+
+  // Validation schema using Yup
+  const validationSchema = Yup.object({
+    name: Yup.string().required('Required'),
+    email: Yup.string().email('Invalid email address').required('Required'),
+    password: Yup.string().required('Required'),
+    occupation: Yup.string().required('Required'),
+  });
+
+  // Formik hook setup
+  const formik = useFormik({
+    initialValues: {
       name: '',
       email: '',
       password: '',
-      occupation:''
-    });
-  
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    };
-
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      // Send a POST request with formData to your backend API for user registration.
+      occupation: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      // Your existing form submission logic
       try {
         const response = await fetch('http://localhost:3001/register/', {
           method: 'POST',
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(values),
         });
-        
+
         if (response.status === 200) {
           console.log('User registered successfully');
           navigate('/signIn');
-          }
-          else {
+        } else {
           console.error('User registration failed');
-          
         }
       } catch (error) {
         console.error('Error during registration:', error);
       }
-    };
+    },
+  });
 
   return (
     <div className="container mt-5">
       <h2 className='display-2 text-light'>Signup </h2>
-      <form>
-  <div class="mb-3">
-    <label for="name" class="form-label text-light">Name</label>
-    <input type="text" onChange={handleChange} name='name' value={formData.name} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"></input>
-    
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label text-light">email</label>
-    <input type="email" onChange={handleChange} name='email' value={formData.email} class="form-control" id="exampleInputPassword1"></input>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label text-light">password</label>
-    <input type="password" onChange={handleChange} name='password' value={formData.password}class="form-control" id="exampleInputPassword1"></input>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label text-light">occupation</label>
-    <input type="text" onChange={handleChange} name='occupation' value={formData.occupation} class="form-control" id="exampleInputPassword1"></input>
-  </div>
-  
-  <button type="submit" onClick={handleSubmit} class="btn btn-primary">Submit</button>
-</form>
+      <form onSubmit={formik.handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label text-light">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.name}
+            className={`form-control ${formik.touched.name && formik.errors.name ? 'is-invalid' : ''}`}
+          />
+          {formik.touched.name && formik.errors.name ? (
+            <div className="invalid-feedback">{formik.errors.name}</div>
+          ) : null}
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label text-light">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.email}
+            className={`form-control ${formik.touched.email && formik.errors.email ? 'is-invalid' : ''}`}
+          />
+          {formik.touched.email && formik.errors.email ? (
+            <div className="invalid-feedback">{formik.errors.email}</div>
+          ) : null}
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label text-light">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.password}
+            className={`form-control ${formik.touched.password && formik.errors.password ? 'is-invalid' : ''}`}
+          />
+          {formik.touched.password && formik.errors.password ? (
+            <div className="invalid-feedback">{formik.errors.password}</div>
+          ) : null}
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="occupation" className="form-label text-light">Occupation</label>
+          <input
+            type="text"
+            id="occupation"
+            name="occupation"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.occupation}
+            className={`form-control ${formik.touched.occupation && formik.errors.occupation ? 'is-invalid' : ''}`}
+          />
+          {formik.touched.occupation && formik.errors.occupation ? (
+            <div className="invalid-feedback">{formik.errors.occupation}</div>
+          ) : null}
+        </div>
+
+        <button type="submit" className="btn btn-primary">Submit</button>
+      </form>
     </div>
   );
 };

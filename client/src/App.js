@@ -10,12 +10,14 @@ import Profile from './scenes/profile.jsx';
 import { useSelector } from 'react-redux/es/hooks/useSelector.js';
 import MentorPage from './scenes/mentorPage.jsx';
 
+
 function App() {
   const isAuth = Boolean(useSelector((state)=> state.auth.token));
 
   return (
     <>
     <div className='app' >
+    
       <BrowserRouter>
         
         <Routes>
@@ -30,6 +32,7 @@ function App() {
         </Routes>
        
       </BrowserRouter> 
+      
      
     </div>
     </> 

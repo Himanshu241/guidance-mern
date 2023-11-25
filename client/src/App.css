@@ -680,4 +680,30 @@ input {
 }
 
 
+/* foot.css */
+.footer {
+  /* Add your general styling here */
+}
+
+.col-1,
+.col-2,
+.col-3 {
+  /* Add styling for each column */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .footer {
+    /* Adjust styling for smaller screens */
+    flex-direction: column; /* or any other adjustments you need */
+  }
+
+  .col-1,
+  .col-2,
+  .col-3 {
+    width: 100%; /* Make each column take full width */
+    text-align: center; /* Center text in each column */
+    margin-bottom: 20px; /* Add some space between columns */
+  }
+}
 
