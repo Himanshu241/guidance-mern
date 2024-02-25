@@ -175,6 +175,8 @@ form button
     color: white; 
     font-size : 30px;
     cursor: pointer;
+    background-color: #1d263bc7;
+
 }
 .navbar input
 {
@@ -681,15 +683,7 @@ input {
 
 
 /* foot.css */
-.footer {
-  /* Add your general styling here */
-}
 
-.col-1,
-.col-2,
-.col-3 {
-  /* Add styling for each column */
-}
 
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
@@ -706,4 +700,6 @@ input {
     margin-bottom: 20px; /* Add some space between columns */
   }
 }
+
+
 

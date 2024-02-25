@@ -234,7 +234,18 @@ app.get('/searchMentor',verifyToken, async (req, res) => {
 
   try {
     // Use a regex for case-insensitive partial matching
-    const users = await User.find({ occupation: { $regex: new RegExp(query, 'i') } });
+    const users = await User.find({ 
+      $and: [
+          { 
+              occupation: { 
+                  $regex: new RegExp(query, 'i') 
+              } 
+          },
+          {
+              isMentor: true
+          }
+      ]
+  });
 
     res.json(users);
   } catch (error) {

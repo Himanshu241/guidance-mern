@@ -1,8 +1,15 @@
 import React from 'react'
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-function Navbar() {
+import { setLogout } from '../state';
+import { useSelector } from 'react-redux';
+
+const Navbar = () =>{
+
+    
+
+
     const navigate = useNavigate();
+
     const home=(e)=>{
         e.preventDefault();
         navigate('/home');
@@ -19,6 +26,11 @@ function Navbar() {
         e.preventDefault();
         navigate('/mentorPage');
     }
+    const logout=()=>{
+        setLogout();
+        navigate('/');
+        console.log('*****************logged out**********************');
+    };
 
    return(
         <>
@@ -35,7 +47,10 @@ function Navbar() {
                 </li>
             
                 <button type="button" onClick={mentorPage} >SEARCH A MENTOR</button>
-            
+                <li style={{ position: 'absolute', right: 30 }}>
+                <button type="button" onClick={logout} >LOGOUT</button>
+
+                </li>
             </ul>
            
         </div>
